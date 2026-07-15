@@ -162,6 +162,112 @@ main{padding:40px 32px;max-width:1200px;margin:0 auto;}
 footer{border-top:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--text-dim);font-family:var(--font-mono);}
 footer span{color:var(--green-dim);}[data-theme="starwars"] footer{border-top:1px solid #2a1800;color:#5a5830;}[data-theme="starwars"] footer span{color:#FF6000;}[data-theme="tng"] footer{border-top:3px solid #FF9900;color:#FFCC99;background:#000;}[data-theme="tng"] footer span{color:#FF9900;}
 @media(max-width:600px){header{padding:0 12px;}.hero{padding:36px 16px 28px;}main{padding:28px 16px;}.nav-panel-inner{padding:12px;}.theme-btn{font-size:9px;padding:3px 5px;}[data-theme="tng"] header{padding-left:32px;}[data-theme="tng"] .hero,[data-theme="tng"] main,[data-theme="tng"] footer{padding-left:36px;}.lcp{font-size:9px;letter-spacing:.1em;}[data-theme="starwars"] .repo-card{grid-template-columns:80px 1fr;}[data-theme="starwars"] .nav-card{grid-template-columns:64px 1fr;}}
+
+/* ═══════ TNG FULL PAGE OVERLAY ═══════ */
+#tng-page{display:none;position:fixed;inset:0;z-index:10000;background:#000;
+  flex-direction:column;font-family:'Antonio','Arial Narrow',sans-serif;
+  font-weight:700;color:#000;overflow:hidden;}
+[data-theme="tng"] #tng-page{display:flex;}
+
+/* Layout rows */
+.tngr{display:flex;flex-direction:row;}
+.tngr-top{flex:0 0 260px;overflow:hidden;}
+.tngr-body{flex:1;min-height:0;overflow-y:auto;align-items:stretch;}
+
+/* ── LEFT TOP (container has border-radius:0 0 0 160px) ── */
+.tng-lt{width:240px;flex-shrink:0;display:flex;flex-direction:column;
+  background:#9966CC;border-radius:0 0 0 160px;text-align:right;overflow:hidden;}
+.tng-lt-btn{background:#FF9900;border:none;font-family:'Antonio',sans-serif;
+  font-weight:700;font-size:1.1rem;text-transform:uppercase;text-align:right;
+  padding:1rem 1.2rem;cursor:pointer;color:#000;flex:0 0 auto;min-height:90px;
+  display:flex;align-items:flex-end;justify-content:flex-end;}
+.tng-lt-code{padding:.6rem 1.2rem;font-size:.8rem;opacity:.5;line-height:1.5;flex:1;}
+
+/* ── RIGHT TOP ── */
+.tng-rt{flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.tng-banner{font-size:clamp(1.4rem,3.5vw,4rem);text-align:right;color:#FF9900;
+  padding:.5rem .7rem .2rem;line-height:1;}
+.tng-mid{display:flex;align-items:flex-start;gap:.5rem;padding:0 .5rem .5rem;}
+/* Data cascade */
+.tng-dc-wrap{flex:1;display:flex;flex-wrap:wrap;justify-content:flex-end;
+  overflow:hidden;height:calc(9 * 1rem + 8px);padding:0 .3rem;gap:.4rem;}
+.tng-dc-col{display:flex;flex-direction:column;text-align:right;
+  font-size:.75rem;line-height:1;gap:1px;}
+.r1{animation:rA 6s ease .2s infinite;}.r2{animation:rB 6s ease .2s infinite;}
+.r3{animation:rC 6s ease .3s infinite;}.r4{animation:rB 6s ease .4s infinite;}
+.r5{animation:rC 6s ease .5s infinite;}.r6{animation:rA 6s ease .6s infinite;}
+.r7{animation:rC 6s ease .7s infinite;}
+@keyframes rA{0%,3.99%{color:transparent}4%,49%{color:#FF9900}50%,63%{color:#ff0}64%,100%{color:#FF9900}}
+@keyframes rB{0%,12.99%{color:transparent}13%,49%{color:#FF9900}50%,53%{color:#ff0}54%,100%{color:#FF9900}}
+@keyframes rC{0%,26.99%{color:transparent}27%,40%{color:#ff0}41%,100%{color:#FF9900}}
+/* Nav pills — side by side */
+.tng-pills{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.4rem;
+  flex-shrink:0;align-self:center;padding-right:.3rem;}
+.tng-pill{display:flex;align-items:center;justify-content:center;
+  padding:.6rem 1.8rem;border-radius:100vmax;border:none;
+  font-family:'Antonio',sans-serif;font-weight:700;font-size:.95rem;
+  text-transform:uppercase;cursor:pointer;min-height:70px;
+  min-width:clamp(110px,15vw,170px);flex:1;transition:opacity .15s;}
+.tng-pill-p{background:#CC6699;color:#000;}
+.tng-pill-n{background:#9966CC;color:#fff;}
+.tng-pill.active{outline:3px solid #fff;outline-offset:2px;}
+.tng-pill:not(.active){opacity:.5;}
+/* Bar panels */
+.tng-bp{display:flex;height:22px;gap:3px;}
+.tng-bp .a{width:40%;background:#9966CC;flex-shrink:0;}
+.tng-bp .b{width:4%;background:#FF9900;flex-shrink:0;}
+.tng-bp .c{width:17%;background:#CC6699;flex-shrink:0;}
+.tng-bp .d{flex:1;background:#6699FF;}
+.tng-bp .e{width:4%;background:#FF6666;flex-shrink:0;}
+.tng-bp2 .a{background:#FF6666;}.tng-bp2 .b{background:#FFCC66;}
+.tng-bp2 .c{background:#FF6666;}.tng-bp2 .d{background:#9966CC;}
+.tng-bp2 .e{background:#CC6699;}
+
+/* ── LEFT BODY ──
+   KEY: ::before has NO z-index → panel-3 (position:relative) renders on top
+   Panel-3's border-radius cuts top-left, showing ::before's black behind it */
+.tng-lb{width:240px;flex-shrink:0;display:flex;flex-direction:column;
+  position:relative;align-self:stretch;}
+.tng-lb::before{content:'';position:absolute;top:0;left:0;width:240px;
+  height:190px;background:#000;pointer-events:none;}
+/* panel-3: position:relative → paints ABOVE ::before (DOM order, both z-index:auto) */
+.tng-p3{border-radius:160px 0 0 0;min-height:190px;background:#CC6699;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:.75rem;font-size:.8rem;position:relative;}
+.tng-p4{background:#FF9900;padding:.75rem;text-align:right;font-size:.8rem;}
+.tng-p5{background:#9966CC;padding:.75rem;text-align:right;font-size:.8rem;color:#fff;}
+.tng-p6{background:#CC6699;padding:.75rem;text-align:right;font-size:.8rem;}
+.tng-p7{background:#6699FF;padding:.75rem;text-align:right;font-size:.8rem;
+  color:#fff;flex:1;}
+.tng-phop{opacity:.4;}
+
+/* ── RIGHT BODY ── */
+.tng-rb{flex:1;display:flex;flex-direction:column;position:relative;}
+
+/* Sections */
+.tng-sect{display:none;padding:1.5rem 1.5rem .5rem;}
+.tng-sect.on{display:block;}
+/* Pill links */
+.tng-plist{display:flex;flex-wrap:wrap;gap:.75rem;}
+.tng-plink{display:flex;align-items:center;justify-content:center;
+  min-height:70px;padding:.8rem 1.8rem;
+  flex:0 0 calc(33.333% - .5rem);min-width:0;
+  border-radius:100vmax;font-family:'Antonio',sans-serif;font-weight:700;
+  font-size:.95rem;letter-spacing:.15em;text-transform:uppercase;
+  text-decoration:none;transition:opacity .15s;}
+.tng-plink:hover{opacity:.72;}
+.tng-plist .tng-plink:nth-child(1){background:#FF9900;color:#000;}
+.tng-plist .tng-plink:nth-child(2){background:#9966CC;color:#fff;}
+.tng-plist .tng-plink:nth-child(3){background:#CC6699;color:#fff;}
+.tng-plist .tng-plink:nth-child(4){background:#6699FF;color:#fff;}
+.tng-plist .tng-plink:nth-child(5){background:#FF6666;color:#fff;}
+.tng-plist .tng-plink:nth-child(6){background:#FFCC66;color:#000;}
+.tng-plist .tng-plink:nth-child(7){background:#66CCCC;color:#000;}
+/* Footer */
+.tng-foot{margin-top:auto;border-top:2px solid #FF9900;padding:12px 24px;
+  font-family:'Roboto Mono',monospace;font-size:10px;color:#FF9900;
+  background:#000;display:flex;justify-content:space-between;}
+/* ═══════ END TNG OVERLAY ═══════ */
 </style></head><body>
 <div class="lcars-left"></div><div class="lcars-bottom"></div>
 <div class="lcars-bar"><div class="lcars-elbow"></div><div class="lcars-top-panels"><div class="lcp c1">PROJECTS HUB</div><div class="lcp c2">REPOSITÓRIOS</div><div class="lcp c3">NAV PORTUGAL</div><div class="lcp c4">ONLINE</div></div></div>
@@ -212,11 +318,6 @@ footer span{color:var(--green-dim);}[data-theme="starwars"] footer{border-top:1p
       <span class="repo-icon">🎪</span><div class="repo-name">Feiras &amp; Mercados</div>
       <div class="repo-desc">Diretório de feiras e mercados de Portugal — mapa interativo, calendário e filtro por distrito.</div>
       <div class="repo-link">mendreas.github.io/Feiras</div></a>
-    <a class="repo-card" href="https://mendreas.github.io/restaurantes/" target="_blank">
-      <div class="sw-art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="68" height="68"><rect width="80" height="80" fill="#0d0a1a"/><rect x="12" y="44" width="56" height="24" rx="3" fill="#1a1206" stroke="#5a4020" stroke-width="0.8"/><rect x="16" y="36" width="48" height="10" rx="2" fill="#2a1e08" stroke="#c8a84b" stroke-width="0.8"/><circle cx="28" cy="26" r="10" fill="#1e1608" stroke="#5a4020" stroke-width="0.8"/><circle cx="52" cy="26" r="10" fill="#1e1608" stroke="#5a4020" stroke-width="0.8"/><line x1="18" y1="26" x2="38" y2="26" stroke="#c8a84b" stroke-width="1.5" opacity="0.7"/><line x1="28" y1="16" x2="28" y2="36" stroke="#c8a84b" stroke-width="1.5" opacity="0.7"/><line x1="42" y1="26" x2="62" y2="26" stroke="#c8a84b" stroke-width="1.5" opacity="0.7"/><line x1="52" y1="16" x2="52" y2="36" stroke="#c8a84b" stroke-width="1.5" opacity="0.7"/></svg></div>
-      <span class="repo-icon">🍽️</span><div class="repo-name">Mesa Marcada</div>
-      <div class="repo-desc">Procura de restaurantes para reuniões — dados OpenStreetMap, votação e eventos.</div>
-      <div class="repo-link">mendreas.github.io/restaurantes</div></a>
   </div>
   <div class="sec-label">Aplicações Profissionais <span class="tag" id="nav-tag">NAV PORTUGAL</span></div>
   <div class="nav-section">
@@ -259,10 +360,91 @@ footer span{color:var(--green-dim);}[data-theme="starwars"] footer{border-top:1p
 <script>
 const THEMES={atc:{logo:'mendreas<span>//</span>hub',eyebrow:'Paulo Leal · Repositórios Pessoais',h1:'PROJECTS<br>HUB',sub:'Acesso centralizado aos repositórios GitHub e aplicações NAV Portugal.',navBadge:'NAV EP · ATS',navTitle:'NAV PORTUGAL',navSub:'Aplicações de Apoio à Gestão ATC — Lisboa',footerBrand:'mendreas // hub · <span>github.com/mendreas</span>'},starwars:{logo:'mendreas<span>//</span>holonet',eyebrow:'PAULO LEAL · GALACTIC DATABASE',h1:'GALACTIC<br>NETWORK',sub:'Acesso centralizado aos repositórios. May the Force be with you.',navBadge:'IMPERIAL OPS',navTitle:'NAV PORTUGAL',navSub:'Air Traffic Operations — Sector Lisboa',footerBrand:'mendreas // holonet · <span>github.com/mendreas</span>'},tos:{logo:'mendreas<span>//</span>starfleet',eyebrow:'Lt. Cmdr. Paulo Leal · Starfleet Database',h1:'STARFLEET<br>DATABASE',sub:'Acesso centralizado aos repositórios. Live long and prosper.',navBadge:'ATC DIVISION',navTitle:'NAV PORTUGAL',navSub:'Air Traffic Control — Starbase Lisboa',footerBrand:'mendreas // starfleet · <span>github.com/mendreas</span>'},tng:{logo:'mendreas<span>//</span>lcars',eyebrow:'PAULO LEAL · OPERATIONS DIVISION',h1:'LCARS<br>INTERFACE',sub:'Library Computer Access/Retrieval System — Repositórios e Aplicações NAV Portugal.',navBadge:'ATC · LCARS',navTitle:'NAV PORTUGAL',navSub:'Air Traffic Control Systems — Lisboa Sector',footerBrand:'mendreas // lcars · <span>LCARS 47.2 · github.com/mendreas</span>'}};
 function getStardate(){const ref=new Date('1987-09-28');const diff=(new Date()-ref)/(1000*60*60*24);return(41000+diff*1000/365).toFixed(1);}
-function setTheme(t){if(!THEMES[t])return;document.documentElement.setAttribute('data-theme',t);localStorage.setItem('hub-theme',t);document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.t===t));const d=THEMES[t];document.getElementById('logo-text').innerHTML=d.logo;document.getElementById('hero-eyebrow').textContent=d.eyebrow;document.getElementById('hero-h1').innerHTML=d.h1;document.getElementById('hero-sub').textContent=d.sub;document.getElementById('nav-badge').textContent=d.navBadge;document.getElementById('nav-title').textContent=d.navTitle;document.getElementById('nav-subtitle').textContent=d.navSub;document.getElementById('footer-brand').innerHTML=d.footerBrand;if(t==='tos')document.getElementById('stardate').textContent='SD '+getStardate();}
+function setTheme(t){if(!THEMES[t])return;document.documentElement.setAttribute('data-theme',t);localStorage.setItem('hub-theme',t);document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.t===t));const d=THEMES[t];document.getElementById('logo-text').innerHTML=d.logo;document.getElementById('hero-eyebrow').textContent=d.eyebrow;document.getElementById('hero-h1').innerHTML=d.h1;document.getElementById('hero-sub').textContent=d.sub;document.getElementById('nav-badge').textContent=d.navBadge;document.getElementById('nav-title').textContent=d.navTitle;document.getElementById('nav-subtitle').textContent=d.navSub;document.getElementById('footer-brand').innerHTML=d.footerBrand;if(t==='tos')document.getElementById('stardate').textContent='SD '+getStardate();if(t==='tng')tngSwitch('particular');}
 function updateClock(){const n=new Date();document.getElementById('clock').textContent=String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0')+':'+String(n.getUTCSeconds()).padStart(2,'0');if(document.documentElement.getAttribute('data-theme')==='tos')document.getElementById('stardate').textContent='SD '+getStardate();}
 updateClock();setInterval(updateClock,1000);
 const d=new Date();document.getElementById('footer-date').textContent=d.toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 function toggleNav(){document.getElementById('navToggle').classList.toggle('open');document.getElementById('navPanel').classList.toggle('open');}
 setTheme(localStorage.getItem('hub-theme')||'atc');
-</script></body></html>
+
+function tngSwitch(s){
+  document.querySelectorAll('.tng-sect').forEach(function(el){el.classList.remove('on');});
+  var el=document.getElementById('tngS-'+s);if(el)el.classList.add('on');
+  document.querySelectorAll('.tng-pill').forEach(function(b){
+    var fn=b.getAttribute('onclick')||'';
+    b.classList.toggle('active',fn.indexOf("'"+s+"'")>-1);
+  });
+}
+</script>
+<!-- TNG FULL PAGE OVERLAY -->
+<div id="tng-page">
+  <!-- TOP ROW -->
+  <div class="tngr tngr-top">
+    <div class="tng-lt">
+      <button class="tng-lt-btn">LCARS</button>
+      <div class="tng-lt-code">mendreas<br>// lcars<br>01-HUB</div>
+    </div>
+    <div class="tng-rt">
+      <div class="tng-banner">PAULO LEAL &middot; LCARS</div>
+      <div class="tng-mid">
+        <div class="tng-dc-wrap">
+          <div class="tng-dc-col"><div class="r1">93</div><div class="r1">1853</div><div class="r2">24109</div><div class="r3">7</div><div class="r3">7024</div><div class="r4">322</div><div class="r5">4149</div><div class="r6">86</div><div class="r7">05</div></div>
+          <div class="tng-dc-col"><div class="r2">21509</div><div class="r1">68417</div><div class="r3">80</div><div class="r2">2048</div><div class="r1">319825</div><div class="r4">46233</div><div class="r5">05</div><div class="r6">2014</div><div class="r7">30986</div></div>
+          <div class="tng-dc-col"><div class="r3">585101</div><div class="r2">25403</div><div class="r1">31219</div><div class="r4">752</div><div class="r3">0604</div><div class="r5">21048</div><div class="r6">293612</div><div class="r7">534082</div><div class="r1">206</div></div>
+          <div class="tng-dc-col"><div class="r1">2107853</div><div class="r3">12201972</div><div class="r2">24487255</div><div class="r4">30412</div><div class="r5">98</div><div class="r6">4024161</div><div class="r7">888</div><div class="r1">35045462</div><div class="r2">41520257</div></div>
+          <div class="tng-dc-col"><div class="r4">33</div><div class="r3">56</div><div class="r2">04</div><div class="r1">69</div><div class="r4">41</div><div class="r5">15</div><div class="r6">25</div><div class="r7">65</div><div class="r1">21</div></div>
+          <div class="tng-dc-col"><div class="r5">0223</div><div class="r4">688</div><div class="r3">28471</div><div class="r2">21366</div><div class="r1">8654</div><div class="r6">31</div><div class="r7">1984</div><div class="r5">272</div><div class="r4">21854</div></div>
+          <div class="tng-dc-col"><div class="r6">406822</div><div class="r5">81205</div><div class="r4">91007</div><div class="r3">38357</div><div class="r2">110</div><div class="r1">2041</div><div class="r7">312</div><div class="r6">57104</div><div class="r5">00708</div></div>
+          <div class="tng-dc-col"><div class="r7">272448</div><div class="r6">29620</div><div class="r5">339048</div><div class="r4">31802</div><div class="r3">9859</div><div class="r2">672304</div><div class="r1">581131</div><div class="r7">338</div><div class="r6">70104</div></div>
+          <div class="tng-dc-col"><div class="r1">16182</div><div class="r7">711632</div><div class="r6">102955</div><div class="r5">2061</div><div class="r4">5804</div><div class="r3">850233</div><div class="r2">833441</div><div class="r1">465</div><div class="r7">210047</div></div>
+        </div>
+        <nav class="tng-pills">
+          <button class="tng-pill tng-pill-p active" onclick="tngSwitch('particular')">PARTICULAR</button>
+          <button class="tng-pill tng-pill-n" onclick="tngSwitch('nav')">NAV</button>
+        </nav>
+      </div>
+      <div class="tng-bp"><div class="a"></div><div class="b"></div><div class="c"></div><div class="d"></div><div class="e"></div></div>
+    </div>
+  </div>
+  <!-- BODY ROW -->
+  <div class="tngr tngr-body">
+    <div class="tng-lb">
+      <div class="tng-p3"><span>03<span class="tng-phop">-PESSOAL</span></span></div>
+      <div class="tng-p4">04<span class="tng-phop">-NAV</span></div>
+      <div class="tng-p5">05<span class="tng-phop">-1701D</span></div>
+      <div class="tng-p6">06<span class="tng-phop">-LCARS</span></div>
+      <div class="tng-p7">07<span class="tng-phop">-HUB</span></div>
+    </div>
+    <div class="tng-rb">
+      <div class="tng-bp tng-bp2"><div class="a"></div><div class="b"></div><div class="c"></div><div class="d"></div><div class="e"></div></div>
+      <!-- PARTICULAR -->
+      <div id="tngS-particular" class="tng-sect on">
+        <div class="tng-plist">
+          <a class="tng-plink" href="https://mendreas.github.io/ev-portugal-arctic-frost/" target="_blank">EV Portugal</a>
+          <a class="tng-plink" href="https://mendreas.github.io/AstroLogs/" target="_blank">AstroLogs</a>
+          <a class="tng-plink" href="https://mendreas.github.io/atlas-viagens/" target="_blank">Atlas de Viagens</a>
+          <a class="tng-plink" href="https://mendreas.github.io/CelestialLog/" target="_blank">CelestialLog</a>
+          <a class="tng-plink" href="https://mendreas.github.io/SC/" target="_blank">Sublinha Conta</a>
+          <a class="tng-plink" href="https://mendreas.github.io/Feiras/" target="_blank">Feiras &amp; Mercados</a>
+          <a class="tng-plink" href="https://mendreas.github.io/restaurantes/" target="_blank">Mesa Marcada</a>
+        </div>
+      </div>
+      <!-- NAV -->
+      <div id="tngS-nav" class="tng-sect">
+        <div class="tng-plist">
+          <a class="tng-plink" href="https://mendreas.github.io/ATOP_LIS_AIR_AC/" target="_blank">ATOP LIS AIR</a>
+          <a class="tng-plink" href="https://mendreas.github.io/RemoteTower/" target="_blank">RT Feira 2026</a>
+          <a class="tng-plink" href="https://mendreas.github.io/RemoteTowerv1/" target="_blank">Remote Tower Hub</a>
+          <a class="tng-plink" href="https://mendreas.github.io/FlightPlotter/" target="_blank">Flight Plotter</a>
+          <a class="tng-plink" href="https://mendreas.github.io/-RCG/" target="_blank">Reuniões GOPLIS</a>
+        </div>
+      </div>
+      <div class="tng-foot">
+        <span>mendreas // lcars &middot; LCARS 47.2</span>
+        <span id="tng-clk"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TNG OVERLAY -->
+</body></html>
