@@ -280,6 +280,53 @@ footer span{color:var(--green-dim);}[data-theme="starwars"] footer{border-top:1p
   font-family:'Roboto Mono',monospace;font-size:10px;color:#FF9900;
   background:#000;display:flex;justify-content:space-between;}
 /* ═══════ END TNG OVERLAY ═══════ */
+
+/* ═══════ TNG PORTRAIT MOBILE ═══════ */
+@media (max-width: 600px) and (orientation: portrait) {
+  /* Hide the left decorative bar entirely */
+  .tng-lt { display: none !important; }
+  .tng-lb { display: none !important; }
+
+  /* Top row takes full width */
+  .tngr-top { flex: 0 0 auto; width: 100%; }
+
+  /* Banner smaller */
+  .tng-banner { font-size: 1.1rem !important; padding: .3rem .5rem; }
+
+  /* Hide data computer (numbers) */
+  .tng-dc-wrap { display: none !important; }
+
+  /* Pills (PARTICULAR / NAV) stack or shrink */
+  .tng-pills { gap: .3rem; padding-right: .3rem; }
+  .tng-pill { padding: .4rem .8rem; font-size: .75rem; }
+
+  /* Bar strips */
+  .tng-bp { height: 14px; }
+
+  /* Body section - full width */
+  .tng-rb { width: 100%; }
+
+  /* Pills list - 2 columns on mobile portrait */
+  .tng-plist { gap: .5rem; }
+  .tng-plink {
+    flex: 0 0 calc(50% - .25rem) !important;
+    min-width: 0 !important;
+    min-height: 50px !important;
+    padding: .5rem .6rem !important;
+    font-size: .72rem !important;
+    letter-spacing: .05em !important;
+    text-align: center;
+  }
+
+  /* Section padding */
+  .tng-sect { padding: .8rem .8rem .3rem; }
+
+  /* Footer */
+  .tng-foot { padding: 8px 12px; font-size: 9px; }
+
+  /* Left panels (p3-p7) hidden */
+  .tng-p3, .tng-p4, .tng-p5, .tng-p6, .tng-p7 { display: none !important; }
+}
 </style></head><body>
 <div class="lcars-left"></div><div class="lcars-bottom"></div>
 <div class="lcars-bar"><div class="lcars-elbow"></div><div class="lcars-top-panels"><div class="lcp c1">PROJECTS HUB</div><div class="lcp c2">REPOSITÓRIOS</div><div class="lcp c3">NAV PORTUGAL</div><div class="lcp c4">ONLINE</div></div></div>
