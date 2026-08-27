@@ -543,7 +543,7 @@ function tngSwitch(s){
         </div>
         <nav class="tng-pills">
           <button class="tng-pill tng-pill-p active" onclick="tngSwitch('particular')">PARTICULAR</button>
-          <button class="tng-pill tng-pill-n" onclick="tngSwitch('nav')">NAV</button>
+          <button class="tng-pill tng-pill-n" onclick="navAuth()">NAV</button>
         </nav>
       </div>
       <div class="tng-bp"><div class="a"></div><div class="b"></div><div class="c"></div><div class="d"></div><div class="e"></div></div>
@@ -601,4 +601,67 @@ function tngSwitch(s){
   </div>
 </div>
 <!-- END TNG OVERLAY -->
+
+<!-- NAV AUTH MODAL -->
+<div id="nav-auth-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;font-family:'Antonio','Arial Narrow',sans-serif;">
+  <div style="background:#111;border:2px solid #FF9900;border-radius:12px;padding:32px 28px;min-width:280px;max-width:340px;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:8px;">🔒</div>
+    <div style="color:#FF9900;font-size:1.1rem;font-weight:700;letter-spacing:.1em;margin-bottom:4px;">ACESSO RESTRITO</div>
+    <div style="color:#666;font-size:.75rem;letter-spacing:.08em;margin-bottom:20px;">NAV PORTUGAL</div>
+    <input id="nav-auth-input" type="password" placeholder="Código de acesso" 
+      style="width:100%;padding:10px 14px;background:#000;border:1px solid #444;border-radius:6px;color:#fff;font-size:1rem;font-family:monospace;outline:none;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')navAuthCheck()">
+    <div id="nav-auth-error" style="color:#ff4444;font-size:.75rem;min-height:18px;margin-bottom:8px;"></div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button onclick="navAuthCheck()" 
+        style="background:#FF9900;color:#000;border:none;border-radius:6px;padding:8px 22px;font-size:.85rem;font-weight:700;font-family:'Antonio',sans-serif;letter-spacing:.08em;cursor:pointer;">
+        ENTRAR
+      </button>
+      <button onclick="navAuthClose()" 
+        style="background:#222;color:#888;border:1px solid #444;border-radius:6px;padding:8px 16px;font-size:.85rem;cursor:pointer;">
+        CANCELAR
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+var NAV_HASH = "88da2dfd7c447789c3609a04d25e037d224deaafed7be5f679d5d569d7058380";
+var navUnlocked = false;
+
+function navAuth() {
+  if (navUnlocked) { tngSwitch('nav'); return; }
+  var modal = document.getElementById('nav-auth-modal');
+  modal.style.display = 'flex';
+  document.getElementById('nav-auth-input').value = '';
+  document.getElementById('nav-auth-error').textContent = '';
+  setTimeout(function(){ document.getElementById('nav-auth-input').focus(); }, 100);
+}
+
+function navAuthClose() {
+  document.getElementById('nav-auth-modal').style.display = 'none';
+}
+
+async function navAuthCheck() {
+  var input = document.getElementById('nav-auth-input').value;
+  var errorEl = document.getElementById('nav-auth-error');
+  if (!input) { errorEl.textContent = 'Introduz o código.'; return; }
+  
+  // SHA-256 via Web Crypto API
+  var msgBuffer = new TextEncoder().encode(input);
+  var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  var hashArray = Array.from(new Uint8Array(hashBuffer));
+  var hashHex = hashArray.map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  
+  if (hashHex === NAV_HASH) {
+    navUnlocked = true;
+    document.getElementById('nav-auth-modal').style.display = 'none';
+    tngSwitch('nav');
+  } else {
+    errorEl.textContent = 'Código incorrecto. Tenta novamente.';
+    document.getElementById('nav-auth-input').value = '';
+    document.getElementById('nav-auth-input').focus();
+  }
+}
+</script>
 </body></html>
