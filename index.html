@@ -542,7 +542,8 @@ function tngSwitch(s){
           <div class="tng-dc-col"><div class="r1">16182</div><div class="r7">711632</div><div class="r6">102955</div><div class="r5">2061</div><div class="r4">5804</div><div class="r3">850233</div><div class="r2">833441</div><div class="r1">465</div><div class="r7">210047</div></div>
         </div>
         <nav class="tng-pills">
-          <button class="tng-pill tng-pill-p active" onclick="tngSwitch('particular')">PARTICULAR</button>
+          <button class="tng-pill tng-pill-p" onclick="partAuth()">PARTICULAR</button>
+          <button class="tng-pill tng-pill-g active" onclick="tngSwitch('geral')">GERAL</button>
           <button class="tng-pill tng-pill-n" onclick="navAuth()">NAV</button>
         </nav>
       </div>
@@ -561,7 +562,7 @@ function tngSwitch(s){
     <div class="tng-rb">
       <div class="tng-bp tng-bp2"><div class="a"></div><div class="b"></div><div class="c"></div><div class="d"></div><div class="e"></div></div>
       <!-- PARTICULAR -->
-      <div id="tngS-particular" class="tng-sect on">
+      <div id="tngS-particular" class="tng-sect">
         <div class="tng-plist">
           <a class="tng-plink" href="https://mendreas.github.io/ev-portugal-arctic-frost/" target="_blank">EV Portugal</a>
           <a class="tng-plink" href="https://astrologylog.netlify.app/" target="_blank">AstroLogs</a>
@@ -579,6 +580,18 @@ function tngSwitch(s){
           <a class="tng-plink" href="https://marcosdomundo.netlify.app/" target="_blank">Marcos do Mundo</a>
           <a class="tng-plink" href="https://sudomurder.netlify.app/" target="_blank">Murdoku</a>
           <a class="tng-plink" href="https://cartoesfidelidade.netlify.app/" target="_blank">Cartões Fidelidade</a>
+          <a class="tng-plink" href="https://emperigo.netlify.app/" target="_blank">Animais em Perigo</a>
+        </div>
+      </div>
+      <!-- GERAL -->
+      <div id="tngS-geral" class="tng-sect on">
+        <div class="tng-plist">
+          <a class="tng-plink" href="https://mendreas.github.io/ev-portugal-arctic-frost/" target="_blank">EV Portugal</a>
+          <a class="tng-plink" href="https://atlasdeviagens.netlify.app/" target="_blank">Atlas de Viagens</a>
+          <a class="tng-plink" href="https://mendreas.github.io/CelestialLog/" target="_blank">CelestialLog</a>
+          <a class="tng-plink" href="https://peppy-narwhal-5a982d.netlify.app/" target="_blank">Calendário Mundial</a>
+          <a class="tng-plink" href="https://lisboatours.netlify.app/" target="_blank">Visitas Lisboa</a>
+          <a class="tng-plink" href="https://marcosdomundo.netlify.app/" target="_blank">Marcos do Mundo</a>
           <a class="tng-plink" href="https://emperigo.netlify.app/" target="_blank">Animais em Perigo</a>
         </div>
       </div>
@@ -601,6 +614,29 @@ function tngSwitch(s){
   </div>
 </div>
 <!-- END TNG OVERLAY -->
+
+<!-- PARTICULAR AUTH MODAL -->
+<div id="part-auth-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;font-family:'Antonio','Arial Narrow',sans-serif;">
+  <div style="background:#111;border:2px solid #CC6699;border-radius:12px;padding:32px 28px;min-width:280px;max-width:340px;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:8px;">🔒</div>
+    <div style="color:#CC6699;font-size:1.1rem;font-weight:700;letter-spacing:.1em;margin-bottom:4px;">ACESSO RESTRITO</div>
+    <div style="color:#666;font-size:.75rem;letter-spacing:.08em;margin-bottom:20px;">PARTICULAR</div>
+    <input id="part-auth-input" type="password" placeholder="Código de acesso"
+      style="width:100%;padding:10px 14px;background:#000;border:1px solid #444;border-radius:6px;color:#fff;font-size:1rem;font-family:monospace;outline:none;margin-bottom:8px;"
+      onkeydown="if(event.key==='Enter')partAuthCheck()">
+    <div id="part-auth-error" style="color:#ff4444;font-size:.75rem;min-height:18px;margin-bottom:8px;"></div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button onclick="partAuthCheck()"
+        style="background:#CC6699;color:#fff;border:none;border-radius:6px;padding:8px 22px;font-size:.85rem;font-weight:700;font-family:'Antonio',sans-serif;letter-spacing:.08em;cursor:pointer;">
+        ENTRAR
+      </button>
+      <button onclick="partAuthClose()"
+        style="background:#222;color:#888;border:1px solid #444;border-radius:6px;padding:8px 16px;font-size:.85rem;cursor:pointer;">
+        CANCELAR
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- NAV AUTH MODAL -->
 <div id="nav-auth-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;font-family:'Antonio','Arial Narrow',sans-serif;">
@@ -627,7 +663,41 @@ function tngSwitch(s){
 
 <script>
 var NAV_HASH = "88da2dfd7c447789c3609a04d25e037d224deaafed7be5f679d5d569d7058380";
+var PART_HASH = "88da2dfd7c447789c3609a04d25e037d224deaafed7be5f679d5d569d7058380";
 var navUnlocked = false;
+var partUnlocked = false;
+
+function partAuth() {
+  if (partUnlocked) { tngSwitch('particular'); return; }
+  var modal = document.getElementById('part-auth-modal');
+  modal.style.display = 'flex';
+  document.getElementById('part-auth-input').value = '';
+  document.getElementById('part-auth-error').textContent = '';
+  setTimeout(function(){ document.getElementById('part-auth-input').focus(); }, 100);
+}
+
+function partAuthClose() {
+  document.getElementById('part-auth-modal').style.display = 'none';
+}
+
+async function partAuthCheck() {
+  var input = document.getElementById('part-auth-input').value;
+  var errorEl = document.getElementById('part-auth-error');
+  if (!input) { errorEl.textContent = 'Introduz o código.'; return; }
+  var msgBuffer = new TextEncoder().encode(input);
+  var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  var hashArray = Array.from(new Uint8Array(hashBuffer));
+  var hashHex = hashArray.map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  if (hashHex === PART_HASH) {
+    partUnlocked = true;
+    document.getElementById('part-auth-modal').style.display = 'none';
+    tngSwitch('particular');
+  } else {
+    errorEl.textContent = 'Código incorrecto. Tenta novamente.';
+    document.getElementById('part-auth-input').value = '';
+    document.getElementById('part-auth-input').focus();
+  }
+}
 
 function navAuth() {
   if (navUnlocked) { tngSwitch('nav'); return; }
