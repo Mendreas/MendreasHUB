@@ -364,9 +364,9 @@ footer span{color:var(--green-dim);}[data-theme="starwars"] footer{border-top:1p
   <div class="logo" id="logo-text">mendreas<span>//</span>hub</div>
   <div class="header-right">
     <div class="theme-switcher">
-      <button class="theme-btn active" data-t="atc" onclick="setTheme('atc')">⊕ ATC</button>
-      <button class="theme-btn" data-t="starwars" onclick="setTheme('starwars')">✦ SW</button>
-      <button class="theme-btn" data-t="tos" onclick="setTheme('tos')">△ TOS</button>
+      <button class="theme-btn active" data-t="atc" onclick="setTheme('atc')" style="display:none">⊕ ATC</button>
+      <button class="theme-btn" data-t="starwars" onclick="setTheme('starwars')" style="display:none">✦ SW</button>
+      <button class="theme-btn" data-t="tos" onclick="setTheme('tos')" style="display:none">△ TOS</button>
       <button class="theme-btn" data-t="tng" onclick="setTheme('tng')">◈ TNG</button>
     </div>
     <div class="clock"><span class="clock-utc-label">UTC </span><span id="clock">07:56:07</span><span class="stardate" id="stardate">SD 79822.8</span></div>
@@ -544,7 +544,7 @@ function updateClock(){const n=new Date();document.getElementById('clock').textC
 updateClock();setInterval(updateClock,1000);
 const d=new Date();document.getElementById('footer-date').textContent=d.toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 function toggleNav(){document.getElementById('navToggle').classList.toggle('open');document.getElementById('navPanel').classList.toggle('open');}
-setTheme(localStorage.getItem('hub-theme')||'atc');
+setTheme('tng');
 
 function tngSwitch(s){
   document.querySelectorAll('.tng-sect').forEach(function(el){el.classList.remove('on');});
